@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Notebook</title>
+    <link rel="stylesheet" href="./css/style.css"/>
+    <link rel="stylesheet" href="./css/index.css"/>
+    <script src="../vue/vue.js" type="text/javascript"></script>
+    <script src="./js/marked.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="notebook">
+    <aside class="side-bar">
+        <div class="toolbar">
+            <button class="btn-primary" @click="addNote" :title="addButtonTitle">addNote</button>
+        </div>
+        <div class="notes">
+            <div class="note"
+                 @click="selectNote(note)"
+                 v-for="note in notes"
+                 :key="note.id">{{note.title}}</div>
+        </div>
+    </aside>
+    <section class="main">
+        <textarea v-model="content"></textarea>
+    </section>
+    <!--预览面板-->
+    <aside class="preview" v-html="notePreview">
+    </aside>
+</div>
+<script>
+    let vm = new Vue({
+      data() {
+        return {
+          content: 'this write a note in **markdown**', // 笔记内容
+          notes: [] //笔记列表
+        }
+      },
+      computed: {
+        // 预览内容
+        notePreview() {
+          return this.content ? marked(this.content) : ''
+        },
+        // 按钮的title
+        addButtonTitle() {
+          return this.notes.length + ' node(s) already'
+        }
+      },
+      methods: {
+        // 选择笔记
+        selectNote(note) {
+          this.content = note.content
+        },
+        // 添加笔记
+        addNote() {
+          let time = Date.now()
+          let note = {
+            id: time,
+            title: 'New note ' + (this.notes.length + 1),
+            content: this.content,
+            created: time,
+            favorite: false
+          }
+          this.notes.push(note)
+        },
+        saveNote(val, oldVal) {
+          console.log(`new value:${val}, old value:${oldVal}`)
+          localStorage.setItem('content', val)
+        }
+      },
+      created() {
+        // this.content = localStorage.getItem('content') || 'you can write in **markdown**'
+      },
+      watch: {
+        // 侦听content数据属性
+        // content: {
+        //   handler: 'saveNote'
+        // }
+        content: 'saveNote' // 可以这样简写
+      }
+    })
+    vm.$mount('#notebook')
+</script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+button {
+    cursor: pointer;
+    margin: 0;
+    font-size: 14px;
+    padding: 5px 6px;
+    color: inherit;
+}
+.btn-primary {
+    color: #fff;
+    background-color: #337ab7;
+    border: 1px solid #2e6da4;
+}
+.btn-primary:hover {
+    color: #fff;
+    background-color: #286090;
+    border-color: #204d74;
+}
