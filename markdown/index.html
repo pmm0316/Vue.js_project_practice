@@ -13,73 +13,79 @@
     <aside class="side-bar">
         <div class="toolbar">
             <button class="btn-primary" @click="addNote" :title="addButtonTitle">addNote</button>
+            <input v-model="selectedNote.title" placeholder="Edit note title"/>
         </div>
         <div class="notes">
             <div class="note"
+                 :class="{selected: note.id === selectedId}"
                  @click="selectNote(note)"
                  v-for="note in notes"
                  :key="note.id">{{note.title}}</div>
         </div>
     </aside>
-    <section class="main">
-        <textarea v-model="content"></textarea>
-    </section>
-    <!--预览面板-->
-    <aside class="preview" v-html="notePreview">
-    </aside>
+    <template v-if="selectedNote">
+        <section class="main">
+            <textarea v-model="selectedNote.content"></textarea>
+        </section>
+        <!--预览面板-->
+        <aside class="preview" v-html="notePreview">
+        </aside>
+    </template>
 </div>
 <script>
-    let vm = new Vue({
-      data() {
-        return {
-          content: 'this write a note in **markdown**', // 笔记内容
-          notes: [] //笔记列表
-        }
-      },
-      computed: {
-        // 预览内容
-        notePreview() {
-          return this.content ? marked(this.content) : ''
-        },
-        // 按钮的title
-        addButtonTitle() {
-          return this.notes.length + ' node(s) already'
-        }
-      },
-      methods: {
-        // 选择笔记
-        selectNote(note) {
-          this.content = note.content
-        },
-        // 添加笔记
-        addNote() {
-          let time = Date.now()
-          let note = {
-            id: time,
-            title: 'New note ' + (this.notes.length + 1),
-            content: this.content,
-            created: time,
-            favorite: false
-          }
-          this.notes.push(note)
-        },
-        saveNote(val, oldVal) {
-          console.log(`new value:${val}, old value:${oldVal}`)
-          localStorage.setItem('content', val)
-        }
-      },
-      created() {
-        // this.content = localStorage.getItem('content') || 'you can write in **markdown**'
-      },
-      watch: {
-        // 侦听content数据属性
-        // content: {
-        //   handler: 'saveNote'
-        // }
-        content: 'saveNote' // 可以这样简写
+  let vm = new Vue({
+    data() {
+      return {
+        content: 'you can write a note in **markdown**', // 笔记内容
+        notes: JSON.parse(localStorage.getItem('notes')) || [], //笔记列表
+        selectedId: JSON.parse(localStorage.getItem('selected-id')) || null
       }
-    })
-    vm.$mount('#notebook')
+    },
+    computed: {
+      // 预览内容
+      notePreview() {
+        return this.selectedNote ? marked(this.selectedNote.content) : ''
+      },
+      // 按钮的title
+      addButtonTitle() {
+        return this.notes.length + ' node(s) already'
+      },
+      // 选中的note
+      selectedNote() {
+        return this.notes.find(item => item.id === this.selectedId)
+      }
+    },
+    methods: {
+      // 选择笔记
+      selectNote(note) {
+        this.selectedId = note.id
+        localStorage.setItem('selected-id', JSON.stringify(note.id))
+      },
+      // 添加笔记
+      addNote() {
+        let time = Date.now()
+        let note = {
+          id: time,
+          title: 'New note ' + (this.notes.length + 1),
+          content: 'you can write a note in **markdown**',
+          created: time,
+          favorite: false
+        }
+        this.notes.push(note)
+      },
+      // 保存笔记
+      saveNotes(val) {
+        localStorage.setItem('notes', JSON.stringify(val))
+      }
+    },
+    watch: {
+      notes: {
+        handler: 'saveNotes',
+        deep: true // 深监听
+      }
+    }
+  })
+  vm.$mount('#notebook')
 </script>
 </body>
 </html>

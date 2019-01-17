@@ -12,6 +12,15 @@ body {
     width: 20%;
     background-color: #eee;
 }
+.notes .note {
+    width: 150px;
+    font-size: 14px;
+    padding: 3px;
+}
+.notes .selected {
+    background-color: yellowgreen;
+    color: #fff;
+}
 .main {
     width: 40%;
     border-right: 1px solid #ccc;
