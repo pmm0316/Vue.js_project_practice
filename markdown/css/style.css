@@ -25,6 +25,16 @@ button{
     background-color: #c9302c;
     border-color: #ac2925;
 }
+.btn-default {
+    color: #333;
+    background-color: #fff;
+    border: 1px solid #ccc;
+}
+.btn-default:hover {
+    color: #333;
+    background-color: #e6e6e6;
+    border-color: #adadad;
+}
 
 .form-control {
     height: 18px;

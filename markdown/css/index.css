@@ -38,8 +38,20 @@ body {
     border: none;
     resize: none;
     width: 99%;
-    height: 98%;
+    height: 91%;
     outline: none;
+}
+.main .toolbar {
+    text-align: center;
+}
+.main .toolbar .label{
+    font-size: 13px;
+    color: #555;
+}
+.main .toolbar .value{
+    font-size: 14px;
+    color: #222;
+    padding-right: 18px;
 }
 .preview {
     width: 40%;
