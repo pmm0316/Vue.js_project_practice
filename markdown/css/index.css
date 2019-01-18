@@ -12,13 +12,22 @@ body {
     width: 20%;
     background-color: #eee;
 }
+.notes {
+    width: 135px;
+}
 .notes .note {
-    width: 150px;
+    cursor: pointer;
+}
+.notes .note .text {
+    display: inline-block;
+    width: 100px;
     font-size: 14px;
     padding: 3px;
+    height:25px;
+    line-height: 25px;
 }
 .notes .selected {
-    background-color: yellowgreen;
+    background-color: #ccc;
     color: #fff;
 }
 .main {

@@ -1,4 +1,4 @@
-button {
+button{
     cursor: pointer;
     margin: 0;
     font-size: 14px;
@@ -14,4 +14,22 @@ button {
     color: #fff;
     background-color: #286090;
     border-color: #204d74;
+}
+.btn-danger {
+    color: #fff;
+    background-color: #d9534f;
+    border: 1px solid #d43f3a;
+}
+.btn-danger:hover {
+    color: #fff;
+    background-color: #c9302c;
+    border-color: #ac2925;
+}
+
+.form-control {
+    height: 18px;
+    padding: 4px 8px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 3px;
 }

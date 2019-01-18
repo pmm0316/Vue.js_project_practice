@@ -5,7 +5,9 @@
     <title>Notebook</title>
     <link rel="stylesheet" href="./css/style.css"/>
     <link rel="stylesheet" href="./css/index.css"/>
+    <link rel="stylesheet" href="./css/iconfont/iconfont.css"/>
     <script src="../vue/vue.js" type="text/javascript"></script>
+    <script src="./css/iconfont/iconfont.js" type="text/javascript"></script>
     <script src="./js/marked.js" type="text/javascript"></script>
 </head>
 <body>
@@ -13,18 +15,29 @@
     <aside class="side-bar">
         <div class="toolbar">
             <button class="btn-primary" @click="addNote" :title="addButtonTitle">addNote</button>
-            <input v-model="selectedNote.title" placeholder="Edit note title"/>
         </div>
         <div class="notes">
             <div class="note"
-                 :class="{selected: note.id === selectedId}"
                  @click="selectNote(note)"
-                 v-for="note in notes"
-                 :key="note.id">{{note.title}}</div>
+                 v-for="note in sortedNotes"
+                 :class="{selected: note.id === selectedId}"
+                 :key="note.id">
+                <span class="text">{{note.title}}</span>
+                <i class="iconfont icon-shoucang" v-if="note.favorite"></i>
+            </div>
         </div>
     </aside>
     <template v-if="selectedNote">
         <section class="main">
+            <div class="note-operate">
+                <input class="form-control" v-model="selectedNote.title" placeholder="Edit note title"/>
+                <button class="btn-danger" @click="favoriteNote">
+                    <i :class="['iconfont', selectedNote.favorite ? 'icon-shoucang' : 'icon-xingxing1']"></i>
+                </button>
+                <button class="btn-danger" @click="removeNote">
+                    <i class="iconfont icon-duomeitiicon-"></i>
+                </button>
+            </div>
             <textarea v-model="selectedNote.content"></textarea>
         </section>
         <!--预览面板-->
@@ -53,9 +66,34 @@
       // 选中的note
       selectedNote() {
         return this.notes.find(item => item.id === this.selectedId)
+      },
+      // 笔记的排序
+      sortedNotes() {
+        return this.notes.slice() // slice() 浅拷贝，返回一个数组副本
+          .sort((a, b) => a.created - b.created) // 先对创建时间排序
+          .sort((a, b) => (a.favorite === b.favorite) ? 0 : a.favorite ? -1 : 1) // 再对是否收藏排序
       }
     },
     methods: {
+      // 收藏笔记
+      favoriteNote() {
+        /**
+         * true ^ true = 0
+         * false ^ true = 1
+         * @type {boolean}
+         */
+        this.selectedNote.favorite ^= true
+      },
+      // 移除笔记
+      removeNote() {
+        if (this.selectedNote && window.confirm('确认删除？')) {
+          let i = this.notes.indexOf(this.selectedNote)
+          console.log(i)
+          if (i !== -1) {
+            this.notes.splice(i, 1)
+          }
+        }
+      },
       // 选择笔记
       selectNote(note) {
         this.selectedId = note.id
