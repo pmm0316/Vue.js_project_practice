@@ -21,5 +21,7 @@ var state = {
     }
   ],
   // 当前玩家的索引
-  currentPlayerIndex: Math.round(Math.random())
+  currentPlayerIndex: Math.round(Math.random()),
+  testHand: [],
+  activeOverlay: null
 }
