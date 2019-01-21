@@ -6,13 +6,21 @@ export default {
   }
 }
 
-export async function $fetch(url) {
- const response = await fetch(`${baseUrl}${url}`)
+export async function $fetch(url, options) {
+  const finalOptions = Object.assign({}, {
+    header: {
+      'Content-Type': 'application/json'
+    },
+    credentials: 'include'
+  }, options)
+  const response = await fetch(`${baseUrl}${url}`, finalOptions)
   if (response.ok) {
     let data = await response.json()
     return data
   } else {
-    const error = new Error('error')
+    const message = await response.text()
+    const error = new Error(message)
+    error.response = response
     throw error
   }
 }

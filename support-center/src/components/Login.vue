@@ -93,7 +93,16 @@
         await this[this.mode]()
       },
       async login () {
-        // TODO
+        let user = {
+          username: this.username,
+          password: this.password
+        }
+        this.$state.user = await this.$fetch('/login', {
+          method: 'POST',
+          body: JSON.stringify(user)
+        })
+        this.$state.user = user
+        this.$router.push({name: 'home'})
       },
       async signup () {
         // TODO
@@ -102,6 +111,11 @@
   }
 </script>
 
-<style scoped>
-
+<style scoped lang="stylus">
+  // >>> 改变其他组件的样式
+  .form {
+    >>> .content {
+      max-width: 400px;
+    }
+  }
 </style>
