@@ -1,8 +1,6 @@
 let baseUrl
 export default {
   install (Vue, options) {
-    console.log(Vue)
-    console.log('install')
     baseUrl = options.baseUrl
     Vue.prototype.$fetch = $fetch
   }
