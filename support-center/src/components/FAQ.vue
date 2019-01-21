@@ -22,12 +22,6 @@
       RemoteData({
         questionList: '/questions'
       })
-    ],
-    data () {
-      return {
-        // error: null//,
-        //loading: false
-      }
-    }
+    ]
   }
 </script>
