@@ -5,7 +5,8 @@
         :name="name"
         :class="inputClass"
         :type="type"
-        :value.prop="value"
+        @input="update"
+        :value.prop="text"
         :placeholder="placeholder"
       />
     </div>
@@ -14,6 +15,10 @@
 <script>
   export default {
     name: 'FormInput',
+    model: {
+      prop: 'text',
+      event: 'update'
+    },
     props: {
       name: {
         type: String,
@@ -22,7 +27,7 @@
         type: String,
         default: 'text'
       },
-      value: {
+      text: {
         required: true
       },
       placeholder: {
@@ -38,6 +43,11 @@
         return {
           'invalid': this.invalid
         }
+      }
+    },
+    methods: {
+      update (event) {
+        this.$emit('update', event.currentTarget.value)
       }
     }
   }
