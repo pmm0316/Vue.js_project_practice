@@ -9,6 +9,7 @@
           <h2 v-html="question.title"></h2>
           <p v-html="question.content"></p>
         </article>
+        <Loading v-if="loading"/>
       </section>
     </main>
 </template>
@@ -19,12 +20,14 @@
     data () {
       return {
         questions: [],
-        error: null
+        error: null,
+        loading: false
       }
     },
     methods: {
     },
     created() {
+      this.loading = true
       fetch('https://www.easy-mock.com/mock/5bfb6f42db1e494ccae9b098/questions').then(res => {
         if (res.ok) {
           return res.json()
@@ -33,11 +36,8 @@
         }
       }).then(result => {
         this.questions = result.data
+        this.loading = false
       })
     }
   }
 </script>
-
-<style scoped lang='stylus'>
-
-</style>
