@@ -26,18 +26,16 @@
     },
     methods: {
     },
-    created() {
+    async created() {
       this.loading = true
-      fetch('https://www.easy-mock.com/mock/5bfb6f42db1e494ccae9b098/questions').then(res => {
-        if (res.ok) {
-          return res.json()
-        } else {
-          return Promise.reject('error')
-        }
-      }).then(result => {
+      try {
+        let result = await this.$fetch('/questions')
+        console.log(result)
         this.questions = result.data
-        this.loading = false
-      })
+      } catch (e) {
+        this.error = e
+      }
+      this.loading = false
     }
   }
 </script>
