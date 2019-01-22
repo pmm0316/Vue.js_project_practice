@@ -102,7 +102,7 @@
           body: JSON.stringify(user)
         })
         this.$state.user = user
-        this.$router.push({name: 'home'})
+        this.$router.replace(this.$route.params.wantedRoute || {name: 'home'})
       },
       async signup () {
         // TODO

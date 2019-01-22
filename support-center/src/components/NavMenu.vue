@@ -2,6 +2,7 @@
     <nav class="menu">
       <router-link :to="{name: 'home'}" exact>Home</router-link>
       <router-link :to="{name: 'faq'}">FAQ</router-link>
+      <router-link :to="{name: 'tickets'}">Support Tickets</router-link>
       <div class="spacer">
         <template v-if="$state.user">
           <a>{{$state.user.username}}</a>
