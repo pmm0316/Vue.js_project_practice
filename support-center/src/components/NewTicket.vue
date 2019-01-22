@@ -33,8 +33,12 @@
 </template>
 
 <script>
+  import PersistantData from '../mixins/PersistantData'
   export default {
     name: 'NewTicket',
+    mixins: [
+      PersistantData('NewTicket', ['title', 'description'])
+    ],
     data () {
       return {
         title: '',

@@ -14,14 +14,6 @@ Vue.use(VueState, state)
 for (const key in filters) {
   Vue.filter(key, filters[key])
 }
-
-new Vue({
-  el: '#app',
-  render: h => h(AppLayout),
-  router,
-  data: state
-})
-
 async function main() {
   try {
     /**
@@ -34,4 +26,11 @@ async function main() {
     console.warn(e)
   }
 }
+new Vue({
+  el: '#app',
+  render: h => h(AppLayout),
+  router,
+  data: state
+})
+
 main()

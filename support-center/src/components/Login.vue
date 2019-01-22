@@ -1,11 +1,6 @@
 <template>
     <main class="login">
       <h1>Please login to continue</h1>
-      <!--<form>
-        <FormInput v-model="username"
-                   name="username"
-                   placeholder="Username"/>
-      </form>-->
       <SmartForm
         class="form"
         :valid="valid"
