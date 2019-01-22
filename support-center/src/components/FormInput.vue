@@ -1,7 +1,9 @@
 <template>
     <div class="row">
-      <input
+      <component
+        :is="element"
         class="input"
+        v-bind="$attrs"
         :name="name"
         :class="inputClass"
         :type="type"
@@ -43,6 +45,9 @@
         return {
           'invalid': this.invalid
         }
+      },
+      element () {
+        return this.type === 'textarea' ? this.type : 'input'
       }
     },
     methods: {
