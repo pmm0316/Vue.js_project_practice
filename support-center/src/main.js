@@ -2,7 +2,7 @@ import Vue from 'vue'
 import AppLayout from './components/AppLayout'
 import router from './router'
 import './global-components'
-import VueFetch from './plugins/fetch'
+import VueFetch, { $fetch } from './plugins/fetch'
 import state from './state'
 import VueState from './plugins/state'
 
@@ -17,3 +17,17 @@ new Vue({
   router,
   data: state
 })
+
+async function main() {
+  try {
+    /**
+     * 刷新页面时，让登录状态保持
+     * 这里的接口是测试
+     * @type {*}
+     */
+    state.user = await $fetch('/user')
+  }catch (e) {
+    console.warn(e)
+  }
+}
+main()
