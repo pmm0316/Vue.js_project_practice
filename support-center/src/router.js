@@ -20,13 +20,23 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  console.log(to)
+  /**
+   * 如果是私有路由，且没有登录
+   * 则重定向到登录组件
+   */
   if (to.meta.private && !state.user) {
     next({
       name: 'login',
       params: {
         wantedRoute: to.fullPath
       }
+    })
+    return
+  }
+  // 如果是访客路由，并用户已登录，则跳转到home页面
+  if (to.meta.guest && state.user) {
+    next({
+      name: 'home'
     })
     return
   }
