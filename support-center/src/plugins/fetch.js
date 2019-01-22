@@ -22,9 +22,13 @@ export async function $fetch(url, options) {
   } else if (response.status === 403) {
     state.user = null
     if (router.currentRoute.matched.some(r => r.meta.private)) {
-      router.replace({name: 'login', params: {
-          wantedRoute: router.currentRoute.fullPath
-        }})
+      router.replace(
+        {
+          name: 'login',
+          params: {
+            wantedRoute: router.currentRoute.fullPath
+          }
+        })
     }
   } else {
     const message = await response.text()
