@@ -9,7 +9,7 @@
         <div v-for="ticket of tickets" class="ticket-item">
           <span>{{ticket.title}}</span>
           <span class="badge">{{ticket.status}}</span>
-          <span class="date">{{ticket.date}}</span>
+          <span class="date">{{ticket.date | date}}</span>
         </div>
       </section>
     </div>

@@ -1,3 +1,6 @@
+/**
+ * 注册全局组件
+ */
 import Vue from 'vue'
 import Loading from './components/Loading'
 import SmartForm from './components/SmartForm'

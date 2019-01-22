@@ -3880,10 +3880,10 @@
   /*  */
 
   /**
-   * Runtime helper for resolving filters
+   * Runtime helper for resolving filters.js
    */
   function resolveFilter (id) {
-    return resolveAsset(this.$options, 'filters', id, true) || identity
+    return resolveAsset(this.$options, 'filters.js', id, true) || identity
   }
 
   /*  */
