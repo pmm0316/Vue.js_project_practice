@@ -1,3 +1,5 @@
+import store from '../store'
+
 let baseUrl
 export default {
   install (Vue, options) {
@@ -16,9 +18,13 @@ export async function $fetch(url, options) {
   const response = await fetch(`${baseUrl}${url}`, finalOptions)
   if (response.ok) {
     let data = await response.json()
-    return data
+    return data.data
   } else if (response.status === 403) {
-
+    /**
+     * 用户会话过期，
+     * 则登出
+     */
+    store.dispatch('logout')
   } else {
     const message = await response.text()
     const error = new Error(message)

@@ -10,11 +10,13 @@
 </template>
 
 <script>
+  import { mapActions } from 'vuex'
   export default {
     name: 'Login',
     methods: {
-      openGoogleSignin () {
-      }
+      ...mapActions({
+        openGoogleSignin: 'login'
+      })
     }
   }
 </script>

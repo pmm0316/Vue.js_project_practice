@@ -5,6 +5,8 @@
  */
 import Vue from 'vue'
 import Vuex from 'vuex'
+import {$fetch} from '../plugins/fetch'
+import router from '../router'
 Vue.use(Vuex)
 
 let state = {
@@ -23,16 +25,31 @@ let getters = {
 }
 
 let actions = {
-  login ({commit}) {
-    const userData = {
-      profile: {
-        displayName: 'Mr Dog'
-      }
+  async login ({commit}) {
+    try {
+      let data = await $fetch('/user')
+      commit('user', data.user)
+      router.replace(router.currentRoute.params.wantedRoute || {name: 'home'})
+    }catch (e) {
+      console.warn(e)
     }
-    commit('user', userData)
   },
   logout ({commit}) {
     commit('user', null)
+    /**
+     * 如果此路由是私有的,
+     * 则要跳转到登录页面,
+     * 并记录保存这个私有路由
+     */
+    if (router.currentRoute.matched.some(r => r.meta.private)) {
+      router.replace({ name: 'login', params: {
+          wantedRoute: router.currentRoute.fullPath
+        }
+      })
+    }
+  },
+  async init({dispatch}) {
+    await dispatch('login')
   }
 }
 

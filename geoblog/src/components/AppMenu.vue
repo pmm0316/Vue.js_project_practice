@@ -22,23 +22,17 @@
 </template>
 
 <script>
+  import {mapGetters, mapActions} from 'vuex'
   export default {
     name: 'AppMenu',
     computed: {
-      user () {
-        return this.$store.getters.user
-      },
-      userPicture () {
-        return this.$store.getters.userPicture
-      }
+      ...mapGetters(['user', 'userPicture'])
     },
     methods: {
-      centerOnUser () {
-        this.$store.dispatch('login')
-      },
-      logout () {
-       this.$store.dispatch('logout')
-      }
+      ...mapActions({
+        centerOnUser: 'login',
+        logout: 'logout'
+      })
     }
   }
 </script>
